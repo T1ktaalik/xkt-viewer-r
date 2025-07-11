@@ -38,3 +38,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 the presigned url
 https://stackoverflow.com/questions/74513682/get-aws-s3-presigned-url-for-a-bucket-object-in-typescript-nextjs-so-that-browse
+
+
+https://www.skypack.dev/view/aws-s3-config
