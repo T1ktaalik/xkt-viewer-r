@@ -1,10 +1,14 @@
  'use client'
  import { Server, BIMViewer, LocaleService } from '@xeokit/xeokit-bim-viewer'
  import { useSearchParams } from 'next/navigation'
- import { useRef } from 'react'
+ import { useRef, useEffect } from 'react'
 
 export default function TheViewer(){
- 
+    console.log(import.meta.S3ID)
+    useEffect(()=> {
+        
+    })
+
     const theExplorer = useRef(null)
     const theInspector = useRef(null)
     const theToolbar = useRef(null) 
@@ -19,14 +23,14 @@ export default function TheViewer(){
         bcfPoint?: string
         projectId?: string
     }
-
+/* 
     const requestedParams: RequestedParams = getRequestedParams()
     function getRequestedParams() {
         const searchParams = useSearchParams()
         console.log('the params are:')
         console.log(searchParams)
         return {}
-    }
+    } */
 
     /** */
    
@@ -35,7 +39,7 @@ export default function TheViewer(){
     const locale = 'ru'
     const bcfPoint = ''
     const projectId = '' 
-
+/* 
     const server = new Server({
         dataDir: requestedParams.dataDir
     })
@@ -43,7 +47,7 @@ export default function TheViewer(){
     const bimViewer = new BIMViewer({
         localeService: null,
 
-    })
+    }) */
 
 
     
