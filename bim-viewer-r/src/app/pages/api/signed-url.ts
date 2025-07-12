@@ -1,8 +1,8 @@
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 import { NextApiRequest, NextApiResponse } from "next"
-
-
+import { Sha256 } from "@aws-crypto/sha256-browser"
+import { Hash } from "@aws-sdk/hash-node"
 //https://www.skypack.dev/view/aws-s3-config
 
 export interface GetFileProps {

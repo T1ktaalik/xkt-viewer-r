@@ -14,12 +14,14 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@aws-crypto/sha256-browser": "^5.2.0",
     "@aws-sdk/client-s3": "^3.844.0",
+    "@aws-sdk/hash-node": "^3.370.0",
     "@aws-sdk/s3-request-presigner": "^3.844.0",
     "@eslint/eslintrc": "^3",
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.19.7",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@xeokit/xeokit-bim-viewer": "^2.7.1",
