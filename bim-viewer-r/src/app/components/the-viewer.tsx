@@ -4,7 +4,7 @@
  import { useRef, useEffect } from 'react'
 
 export default function TheViewer(){
-    console.log(import.meta.S3ID)
+   
     useEffect(()=> {
         
     })
