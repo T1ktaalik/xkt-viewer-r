@@ -1,12 +1,23 @@
  'use client'
  import { Server, BIMViewer, LocaleService } from '@xeokit/xeokit-bim-viewer'
- import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from "react-router";
  import { useRef, useEffect } from 'react'
-
+ 
 export default function TheViewer(){
-   
+
+/* 
+    const server = new Server({
+        dataDir: '/data'
+    })
+    */
+    
+
+
+
     useEffect(()=> {
-        
+       /*    const [searchParams, setSearchParams] = useSearchParams() */
+   console.log('the params are:')
+  /*  console.log(searchParams)  */
     })
 
     const theExplorer = useRef(null)
@@ -48,9 +59,6 @@ export default function TheViewer(){
         localeService: null,
 
     }) */
-
-
-    
 
     return (
         <>
