@@ -21,6 +21,7 @@
     "@eslint/eslintrc": "^3",
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/postcss": "^4",
+    "@types/aws-sdk": "^0.0.42",
     "@types/node": "^20.19.7",
     "@types/react": "^19",
     "@types/react-dom": "^19",
