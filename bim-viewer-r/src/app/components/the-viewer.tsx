@@ -1,23 +1,17 @@
 'use client'
+/* import { GetServerSideProps } from 'next'; */
 import { Server, BIMViewer, LocaleService } from '@xeokit/xeokit-bim-viewer'
-import { useSearchParams } from "react-router";
+import { useSearchParams } from "next/navigation";
 import { useRef, useEffect, forwardRef, ForwardedRef } from 'react'
 import TheExplorer from './the-explorer';
 import TheInspector from './the-inspector';
 import TheToolbar from './the-toolbar';
 import { Props } from 'next/script';
-export default async function TheViewer() {
+export default function TheViewer() {
 
-
-const callHelloAPI = async () => {
-    try {
-      const response = await fetch('/api/get-projects');
-      const data = await response.json();
-      console.log(data)
-    } catch (error) {
-      console.error('Error calling API:', error);
-    }
-  };
+    const [searchParams, setSearchParams] = useSearchParams();
+    
+    console.log(searchParams)
 
 
 
@@ -25,9 +19,9 @@ const callHelloAPI = async () => {
      * Здесь определяем элементы HTML-шаблона
      */
     
-    const TheExplorer = forwardRef(()=> {return (<>
+   /*  const TheExplorer = forwardRef(()=> {return (<>
     <TheExplorer />
-    </>)})
+    </>)}) */
     const theExplorer = useRef(null)
     const theInspector = useRef(null)
     const theToolbar = useRef(null)
@@ -40,9 +34,6 @@ const callHelloAPI = async () => {
     const scaleCanvasResolutionMinDrawCount = 1000; // FastNavPlugin switches to low-res canvas when xeokit's per-frame draw count rises above this
 
 
-
-
-
     /* 
         const server = new Server({
             dataDir: '/data'
@@ -50,15 +41,20 @@ const callHelloAPI = async () => {
         */
 
 
-
-
     useEffect(() => {
-        /*    const [searchParams, setSearchParams] = useSearchParams() */
-        console.log('the params are:')
-        /*  console.log(searchParams)  */
-        
-    })
 
+        const fetchData = async () => {
+            try {
+                const theRes = await fetch('/api/get-projects')
+                console.log('the OK!!!!!!!!!!!!!!!!!!')
+                console.log(theRes)
+            } catch (error) {
+                console.log('Is there an error?')
+                console.error('Error fetching data:', error);
+            }
+        }
+        fetchData()
+    })
 
 
     /** Обработка query params */

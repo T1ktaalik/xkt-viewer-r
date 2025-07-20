@@ -8,7 +8,8 @@ S3KEY: process.env.S3KEY,
 S3REGION: process.env.S3REGION,
 S3ENDPOINTURL: process.env.S3ENDPOINTURL,
 S3BUCKET: process.env.S3BUCKET,
-  }
+  }, 
+
 };
 
 export default nextConfig;
