@@ -6,7 +6,20 @@ import TheExplorer from './the-explorer';
 import TheInspector from './the-inspector';
 import TheToolbar from './the-toolbar';
 import { Props } from 'next/script';
-export default function TheViewer() {
+export default async function TheViewer() {
+
+
+const callHelloAPI = async () => {
+    try {
+      const response = await fetch('/api/get-projects');
+      const data = await response.json();
+      console.log(data)
+    } catch (error) {
+      console.error('Error calling API:', error);
+    }
+  };
+
+
 
     /**
      * Здесь определяем элементы HTML-шаблона
@@ -43,6 +56,7 @@ export default function TheViewer() {
         /*    const [searchParams, setSearchParams] = useSearchParams() */
         console.log('the params are:')
         /*  console.log(searchParams)  */
+        
     })
 
 
