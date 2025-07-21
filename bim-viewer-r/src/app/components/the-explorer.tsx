@@ -9,9 +9,7 @@ export default function TheExplorer() {
     <TheModelsExplorer />
     <TheClassesExplorer />
     <TheObjectsExplorer />
-    <TheStoreysExplorer />  
-          
-          
+    <TheStoreysExplorer />      
         </div>
   );
 }

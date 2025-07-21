@@ -26,6 +26,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@xeokit/xeokit-bim-viewer": "^2.7.1",
+    "@xeokit/xeokit-sdk": "^2.6.84",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
     "react-router": "^7.6.3",
