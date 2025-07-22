@@ -13,7 +13,7 @@ export default function TheViewer() {
     /**
      * Здесь определяем элементы HTML-шаблона
      */
-    const TheViewerCanvas =  useRef(null)
+  /*   const TheViewerCanvas =  useRef(null)
     const TheExplorer = forwardRef(()=> {return (<>
     <TheExplorer />
     </>)})
@@ -23,7 +23,7 @@ export default function TheViewer() {
     const TheToolbar = forwardRef(()=> {return (<>
     <TheToolbar />
     </>)})
-    
+     */
     
         const preventDefault = (e: MouseEvent) =>  {
             e.preventDefault()
@@ -35,9 +35,9 @@ export default function TheViewer() {
 
         const locale = 'ru'
         const projectId = ''   
-        const viewer = new Viewer({
+       /*  const viewer = new Viewer({
             canvasElement:  TheViewerCanvas.current
-        })
+        }) */
 
     
     })
@@ -47,8 +47,8 @@ export default function TheViewer() {
                 <TheExplorer  />
                 <TheInspector />
                 <TheToolbar />
-                <canvas ref={TheViewerCanvas} ></canvas>
-                <canvas id="the-navcube-canvas"></canvas>
+    {/*             <canvas ref={TheViewerCanvas} ></canvas>
+                <canvas id="the-navcube-canvas"></canvas> */}
         </>
     )
 }   
