@@ -23,29 +23,31 @@ export default function TheViewer() {
     const TheToolbar = forwardRef(()=> {return (<>
     <TheToolbar />
     </>)})
-   
+    
+    
+        const preventDefault = (e: MouseEvent) =>  {
+            e.preventDefault()
+        }
 
 
 
     useEffect(() => {
 
         const locale = 'ru'
-        const projectId =
-        
+        const projectId = ''   
         const viewer = new Viewer({
             canvasElement:  TheViewerCanvas.current
         })
-
 
     
     })
 
     return (
         <>
-                <TheExplorer />
+                <TheExplorer  />
                 <TheInspector />
                 <TheToolbar />
-                <canvas ref={TheViewerCanvas}></canvas>
+                <canvas ref={TheViewerCanvas} ></canvas>
                 <canvas id="the-navcube-canvas"></canvas>
         </>
     )
