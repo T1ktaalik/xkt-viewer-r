@@ -2,8 +2,13 @@ import { create } from 'zustand'
 
 type ActiveExplorerTab = 'models' | 'classes' | 'objects' | 'storeys'
 
-
-export const useViewerStore = create((set) => ({
+interface ViewerStore {
+  activeExplorerTab: ActiveExplorerTab
+  setActiveExplorerTab: (tab: ActiveExplorerTab) => void
+}
+export const useViewerStore = create<ViewerStore>((set) => ({
   activeExplorerTab: 'models',
-  setActiveExplorerTab: (tab: ActiveExplorerTab) => set({activeExplorerTab: tab }),
+  setActiveExplorerTab: (tab: ActiveExplorerTab) => {
+    set({activeExplorerTab: tab })
+  },
 }))
