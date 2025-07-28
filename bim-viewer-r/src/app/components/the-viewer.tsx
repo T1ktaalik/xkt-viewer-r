@@ -1,6 +1,7 @@
-'use client'
+
 /* import { GetServerSideProps } from 'next'; */
-import { BIMViewer } from '@/app/libs/bim-viewer-libs/src/BIMViewer'
+import { BIMViewer } from '@xeokit/xeokit-bim-viewer'
+//import { BIMViewer } from '@/app/libs/bim-viewer-libs/src/BIMViewer'
 import {LocaleService} from '@xeokit/xeokit-sdk/src/viewer/localization/LocaleService.js'
 import { Server } from '@/app/libs/bim-viewer-libs/src/server/Server'
 import { useSearchParams } from "next/navigation"
@@ -9,6 +10,8 @@ import TheExplorer from './the-explorer'
 import TheInspector from './the-inspector'
 import TheToolbar from './the-toolbar'
 import { messages as localeMessages } from '@/app/libs/messages' 
+/* import dynamic from 'next/dynamic'
+const  = dynamic() */
 export default function TheViewer() {
 
     /**
@@ -16,8 +19,8 @@ export default function TheViewer() {
      */
     const TheViewerCanvas =  useRef(null)
     const TheExplorerRef = useRef(null)
-    /*const TheInspectorRef = useRef(null)
-    const TheToolbarRef = useRef(null) */
+    const TheInspectorRef = useRef(null)
+    const TheToolbarRef = useRef(null) 
    /*  const TheExplorerRef = forwardRef(()=> {return (<>
     <TheExplorer />
     </>)})
@@ -29,13 +32,9 @@ export default function TheViewer() {
     </>)}) */
     
     
-        const preventDefault = (e: MouseEvent) =>  {
-            e.preventDefault()
-        }
+  
 
-
-
-    useEffect(() => {
+    /* useEffect(() => {   }) */
         const locale = { messages: localeMessages,
             locale: 'ru'
         }
@@ -43,12 +42,12 @@ export default function TheViewer() {
             LocaleService: new LocaleService(locale),
             canvasElement: TheViewerCanvas.current,
             explorerElement: TheExplorerRef.current,
-            /* inspectorElement: TheInspectorRef.current, */
+            inspectorElement: TheInspectorRef.current,
          
         })
 
 
-    })
+  
 
     return (
         <>
