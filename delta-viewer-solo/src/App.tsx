@@ -7,7 +7,7 @@ import useViewStore from "./view-store"
 
 function App() {
   const theElement = useRef(null)
-
+let viewer: any = undefined
   const { view, setView } = useViewStore()
   let bcfViewpoints: any = undefined
   const getView = function () {
@@ -21,8 +21,8 @@ function App() {
    
 
   useEffect(() => {
-
-    const viewer = new Viewer({
+    
+    viewer = new Viewer({
       canvasElement: theElement.current
     })
 
@@ -35,13 +35,14 @@ function App() {
       edges: true
     })
     theScene.on("loaded", () => {
-      
+      console.log(theElement.current)
     })
   })
+  useEffect(() => { console.log('изменения!' + new Date())}, [viewer])
   return (
     <>
       <button onClick={getView} className="absolute top-0 left-1/2 z-20">ВИД!</button>
-      <canvas id="the-canvas" className="absolute h-screen w-screen z-10" ref={theElement}></canvas>
+      <canvas id="the-canvas" className="absolute h-screen w-screen z-10" ref={theElement} ></canvas>
       <div className="absolute top-0 right-0 z-20 h-[300px] w-[300px] bg-red-100">
     
       </div>
