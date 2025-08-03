@@ -4,7 +4,7 @@ import './App.css'
 import { useEffect, useRef } from 'react'
 import useViewStore from "./view-store"
 
-let setTheView = function () { console.log('xoxoxxo') }
+
 function App() {
   const theElement = useRef(null)
 
@@ -13,12 +13,12 @@ function App() {
   const getView = function () {
     if (bcfViewpoints) {
      /*  console.log(bcfViewpoints.getViewpoint({ snapshot: false })) */
-     console.log(view)
+     
       setView(bcfViewpoints.getViewpoint({ snapshot: false }))
       console.log(view)
     }
   }
-
+   
 
   useEffect(() => {
 
@@ -31,18 +31,20 @@ function App() {
 
     const theScene = xktLoaderPlugin.load({
       id: "the-id",
-      src: "geometry.xkt"
+      src: "geometry.xkt",
+      edges: true
     })
     theScene.on("loaded", () => {
-      setView(bcfViewpoints.getViewpoint({ snapshot: false }))
-      console.log(view)
+      
     })
   })
   return (
     <>
       <button onClick={getView} className="absolute top-0 left-1/2 z-20">ВИД!</button>
       <canvas id="the-canvas" className="absolute h-screen w-screen z-10" ref={theElement}></canvas>
-
+      <div className="absolute top-0 right-0 z-20 h-[300px] w-[300px] bg-red-100">
+    
+      </div>
     </>
   )
 }
