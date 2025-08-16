@@ -16,5 +16,8 @@ export const UrlParamsSchema = z.object({
         y: z.number(),
         z: z.number() 
     }, 
-   } 
+    field_of_view: z.number()
+   },
+   lines: z.array(),
+   b
 })
