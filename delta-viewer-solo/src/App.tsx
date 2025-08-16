@@ -1,67 +1,69 @@
 import {
   Viewer,
   XKTLoaderPlugin,
-  BCFViewpointsPlugin,
+  BCFViewpointsPlugin
 } from "@xeokit/xeokit-sdk";
 import "./App.css";
 import { useEffect, useRef } from "react";
-import useViewStore from "./view-store";
-interface View {
-   look: [number, number, number],
-    eye: [number, number, number],
-    up: [number, number, number]
-}
+import useBcfStore from "./bcf-store"
+import qs from 'qs'
+import { useLocation } from 'react-router'
+import { useSearchParams } from "react-router";
 function App() {
   const theElement = useRef(null);
-  let viewer: any = undefined;
-  const { view, setView } = useViewStore();
-  
-function fixView(view: View) {
-   setView(view);
-  }
-
+  const { setSetterFunc, setGetterFunc, getBCF, setBCF } = useBcfStore()
+  const [searchParams, setSearchParams] = useSearchParams()
+  let location: any = useLocation()
   useEffect(() => {
-    viewer = new Viewer({
+    const viewer = new Viewer({
       canvasElement: theElement.current,
     });
     const xktLoaderPlugin = new XKTLoaderPlugin(viewer);
-    
-    const theScene = xktLoaderPlugin.load({
+    const bcfViewpoints = new BCFViewpointsPlugin(viewer)
+    xktLoaderPlugin.load({
       id: "the-id",
       src: "geometry.xkt",
       edges: true,
     });
-    theScene.on("loaded", () => {
-      console.log(viewer.camera);
-    });
-  });
-  useEffect(
-    () => {
-      fixView({ look: viewer.camera.look,
-     eye: viewer.camera.eye,
-     up: viewer.camera.up,});
-    }
-  );
+    
+    let theBcfView: any = undefined
+    let theBcfParsed: any = undefined
+    setGetterFunc(() => {
+      theBcfView = bcfViewpoints.getViewpoint({snapshot: false})
+      console.log(theBcfView)
+      let theBcfViewParams = qs.stringify(theBcfView)
+      setSearchParams(theBcfViewParams)
+      console.log(typeof location.search)
+      console.log(location.search)
+      //theBcfParsed = qs.parse(theBcfViewParams)
+      theBcfParsed = qs.parse(location.search.slice(1))
+      console.log(theBcfParsed.perspective_camera)
+      
+    })
+    setSetterFunc(() => { 
+      console.log(theBcfParsed.perspective_camera)
+      bcfViewpoints.setViewpoint(theBcfParsed), { immediate: false, duration: 5 } })
+  }, []);
   return (
     <>
       <button
-        onClick={() => {
-          console.log(viewer.camera.eye),
-            console.log(viewer.camera.look),
-            console.log(viewer.camera.up);
-        }}
-        className="absolute top-0 left-1/2 z-20"
+        onClick={setBCF}
+        className="absolute top-0 left-1/3 z-20 border"
       >
-        ВИД!
+        SET
+      </button>
+      <button
+        onClick={getBCF}
+        className="absolute top-0 right-1/3 z-20 border"
+      >
+        GET
       </button>
       <canvas
         id="the-canvas"
         className="absolute h-screen w-screen z-10"
         ref={theElement}
       ></canvas>
-      <div className="absolute top-0 right-0 z-20 h-[300px] w-[300px] bg-red-100"></div>
     </>
   );
 }
-
 export default App;
