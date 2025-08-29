@@ -5,5 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "https://storage.yandexcloud.net/apps.cloudbim.ru/show_bcf/",
   plugins: [react(), tailwindcss()/* , reactRouter() */],
 })
