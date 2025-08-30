@@ -5,8 +5,11 @@ import './App.css'
 import {
   Viewer,
   XKTLoaderPlugin,
-   AmbientLight,
-  DirLight
+  AmbientLight,
+  DirLight,
+  LightMap,
+  ReflectionMap,
+  Shadow
 } from "@xeokit/xeokit-sdk";
 function App() {
   const [count, setCount] = useState(0)
@@ -22,12 +25,34 @@ function App() {
 
     new AmbientLight(viewer.current.scene, {
      color: [0.999, 0.999, 0.999],
-     intensity: 0.2
+     intensity: 0.4
 });
+
+
+new ReflectionMap(viewer.current.scene, {
+   src: [
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PX.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NX.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PY.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NY.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PZ.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NZ.png"
+    ]
+})
+new LightMap(viewer.current.scene, {
+   src: [
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PX.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NX.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PY.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NY.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PZ.png",
+        "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NZ.png"
+    ]
+})
 
 new DirLight(viewer.current.scene, {
      id: "keyLight",
-     dir: [0.8, -0.6, -0.8],
+     dir: [0.9, -0.6, -0.8],
      color: [1.0, 0.999, 0.999],
      intensity: 1.0,
      space: "view"
