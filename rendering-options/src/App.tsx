@@ -9,7 +9,9 @@ import {
   DirLight,
   LightMap,
   ReflectionMap,
-  Shadow
+  PointLight,
+
+  
 } from "@xeokit/xeokit-sdk";
 function App() {
   const [count, setCount] = useState(0)
@@ -25,11 +27,12 @@ function App() {
 
     new AmbientLight(viewer.current.scene, {
      color: [0.999, 0.999, 0.999],
-     intensity: 0.4
+     intensity: 0.8
 });
 
 
 new ReflectionMap(viewer.current.scene, {
+  flipY: false,
    src: [
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PX.png",
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NX.png",
@@ -37,7 +40,8 @@ new ReflectionMap(viewer.current.scene, {
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NY.png",
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PZ.png",
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NZ.png"
-    ]
+    ],
+
 })
 new LightMap(viewer.current.scene, {
    src: [
@@ -50,13 +54,22 @@ new LightMap(viewer.current.scene, {
     ]
 })
 
-new DirLight(viewer.current.scene, {
+new PointLight(viewer.current.scene,{
+     id: "rimLight",
+     pos: [20, 80, 80],
+     color: [0.9999, 0.9999, 0.9999],
+     intensity: 1.0,
+     space: "view",
+     castsShadow: true
+});
+
+/* new DirLight(viewer.current.scene, {
      id: "keyLight",
      dir: [0.9, -0.6, -0.8],
-     color: [1.0, 0.999, 0.999],
+     color: [1.0, 1, 1],
      intensity: 1.0,
-     space: "view"
-});
+     space: "space"
+}); */
 /* 
 new DirLight(viewer.current.scene, {
      id: "fillLight",
