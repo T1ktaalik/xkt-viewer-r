@@ -13,6 +13,7 @@ import {
 
   
 } from "@xeokit/xeokit-sdk";
+import {Shadow} from '@xeokit/xeokit-sdk/src/viewer/scene/lights/Shadow.js'
 function App() {
   const [count, setCount] = useState(0)
   const theCanvas = useRef(null)
@@ -31,7 +32,24 @@ function App() {
 });
 
 
-new ReflectionMap(viewer.current.scene, {
+  new DirLight(viewer.current.scene, {
+        id: "keyLight",
+        dir: [0.8, -0.6, -0.8],
+        color: [1.0, 1.0, 1.0],
+        intensity: 1.0,
+        space: "view"
+    });
+
+    new DirLight(viewer.current.scene, {
+        id: "fillLight",
+        dir: [-0.8, -0.4, -0.4],
+        color: [1.0, 1.0, 1.0],
+        intensity: 0.6,
+        space: "view"
+    });
+
+
+/* new ReflectionMap(viewer.current.scene, {
   flipY: false,
    src: [
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PX.png",
@@ -52,16 +70,16 @@ new LightMap(viewer.current.scene, {
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_PZ.png",
         "textures/light/Uffizi_Gallery/Uffizi_Gallery_Irradiance_NZ.png"
     ]
-})
+}) */
 
-new PointLight(viewer.current.scene,{
+/* new PointLight(viewer.current.scene,{
      id: "rimLight",
      pos: [20, 80, 80],
      color: [0.9999, 0.9999, 0.9999],
      intensity: 1.0,
      space: "view",
      castsShadow: true
-});
+}); */
 
 /* new DirLight(viewer.current.scene, {
      id: "keyLight",
