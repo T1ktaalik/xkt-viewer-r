@@ -26,13 +26,21 @@ function App() {
 
     viewer.current.scene.clearLights()
 
+        new PointLight(viewer.current.scene, {
+        id: "light1",
+        pos: [1,1, 1],
+        color: [0.99999, 0.99999, 0.99999],
+        intensity: 1.0,
+        space: "view"
+    });
+
     new AmbientLight(viewer.current.scene, {
      color: [0.999, 0.999, 0.999],
-     intensity: 0.8
+     intensity: 0.2
 });
 
 
-  new DirLight(viewer.current.scene, {
+/*   new DirLight(viewer.current.scene, {
         id: "keyLight",
         dir: [0.8, -0.6, -0.8],
         color: [1.0, 1.0, 1.0],
@@ -47,7 +55,7 @@ function App() {
         intensity: 0.6,
         space: "view"
     });
-
+ */
 
 /* new ReflectionMap(viewer.current.scene, {
   flipY: false,
