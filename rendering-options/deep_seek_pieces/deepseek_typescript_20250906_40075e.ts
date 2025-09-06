@@ -16,20 +16,18 @@ import { Select } from 'antd'
 import { create } from 'zustand'
 
 interface PiecesState {
-  pieces: {value: string, label: string}[];
-  pushPiece: (newPiece: {value: string, label: string}) => void;
+  pieces: string[];
+  pushPiece: (newPiece: string) => void;
 }
 
 const useStore = create<PiecesState>((set) => ({
   pieces: [],
-  pushPiece: (newPiece: {value: string, label: string}) => {
+  pushPiece: (newPiece: string) => {
     set((state) => ({ 
       pieces: [...state.pieces, newPiece]
     }));
   },
 }));
-
-
 
 function App() {
   const theCanvas = useRef(null);
@@ -39,13 +37,16 @@ function App() {
   const pieces = useStore((state) => state.pieces);
   const pushPiece = useStore((state) => state.pushPiece);
 
+  // Debug effect - this will show updated pieces
+  useEffect(() => {
+    console.log('Pieces updated:', pieces);
+  }, [pieces]);
+
   useEffect(() => {
     viewer.current = new Viewer({
       canvasElement: theCanvas.current
     });
     
-
-
     viewer.current.scene.clearLights();
     
     new AmbientLight(viewer.current.scene, {
@@ -53,9 +54,18 @@ function App() {
       intensity: 0.6
     });
     
-
-   // viewer.current.scene.setObjectSelected({})
-
+    new Shadow(viewer.current.scene, {
+      intensity: 0.99999999
+    });
+    
+    new DirLight(viewer.current.scene, {
+      id: "keyLight",
+      dir: [0.8, -0.6, -0.8],
+      color: [1.0, 1, 1],
+      intensity: 1.0,
+      space: "view"
+    });
+    
     const xktLoader = new XKTLoaderPlugin(viewer.current);
     const storeyViewsPlugin = new StoreyViewsPlugin(viewer.current);
     
@@ -67,15 +77,14 @@ function App() {
 
     model.on("loaded", () => {
       console.log("Model loaded!!!");
-      viewer.current.scene.setObjectsSelected(["1qF3ubcHz968P9vHIJ5clk", "1qF3ubcHz968P9vHIJ5clk"])
-        console.log(viewer.current.scene.scene)
+      
       const x = viewer.current.scene.viewer.metaScene.metaModels["maz"].metaObjects;
-      const names: {value: string, label: string}[] = [];
-      console.log(x)
+      const names: string[] = [];
+      
       // Collect all names first
       Object.values(x).forEach(a => {
-       /*  console.log("Found object:", a.name, a.id); */
-        names.push({label: a.name, value: a.id});
+        console.log("Found object:", a.name);
+        names.push(a.name);
       });
       
       // Add all names to the store
@@ -86,7 +95,16 @@ function App() {
       console.log("All pieces should be added now. Check the useEffect above for updates.");
     });
 
-   
+    new ImagePlane(viewer.current.scene, {
+      src: "/333.png",
+      size: 50,
+      position: [0, -1, -50],
+      rotation: [0, 0, 0],
+      opacity: 1.0,
+      collidable: false,
+      gridVisible: true,
+      pickable: true
+    });
     
     model.on("loaded", () => {
       viewer.current.cameraFlight.flyTo(model);
@@ -101,30 +119,19 @@ function App() {
           <Select
             showSearch={true}
             placeholder="поищите"
-            /* options={pieces.map(piece => ({ value: piece.id, label: piece }))} */
-            options={pieces}
-            onChange={()=> { if(viewer.current.scene.setObjectsSelected) {
-                viewer.current.scene.setObjectsSelected([])
-            }}}
-            onSelect={()=> { if(viewer.current.scene.setObjectsSelected) {
-                console.log("can we really select the object?")
-            } else {
-                console.log('probably we still can not')
-            }}}
-            style={{ width: '350px'}}
-            fieldNames={label: label, value: value}
+            options={pieces.map(piece => ({ value: piece, label: piece }))}
           />
         </div>
         
         {/* Debug display */}
-{/*         <div className="absolute top-10 left-0 z-20 bg-white p-4">
+        <div className="absolute top-10 left-0 z-20 bg-white p-4">
           <h3>Pieces in store: {pieces.length}</h3>
           <ul>
             {pieces.map((piece, index) => (
               <li key={index}>{piece}</li>
             ))}
           </ul>
-        </div> */}
+        </div>
       </div>
     </>
   )
