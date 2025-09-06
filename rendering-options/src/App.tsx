@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react'
-import './App.css'
+import { useState, useRef, useEffect } from "react";
+import "./App.css";
 import {
   Viewer,
   XKTLoaderPlugin,
@@ -9,85 +9,91 @@ import {
   ReflectionMap,
   PointLight,
   ImagePlane,
-  StoreyViewsPlugin
+  StoreyViewsPlugin,
 } from "@xeokit/xeokit-sdk";
-import { Shadow } from '@xeokit/xeokit-sdk/src/viewer/scene/lights/Shadow.js'
-import { Select } from 'antd'
-import { create } from 'zustand'
+import { Shadow } from "@xeokit/xeokit-sdk/src/viewer/scene/lights/Shadow.js";
+import { Select } from "antd";
+import { create } from "zustand";
 
+interface Piece {
+  label: string;
+  value: string;
+}
 interface PiecesState {
-  pieces: {value: string, label: string}[];
-  pushPiece: (newPiece: {value: string, label: string}) => void;
+  pieces: { value: string; label: string }[];
+  pushPiece: (newPiece: Piece) => void;
 }
 
-const useStore = create<PiecesState>((set) => ({
+const useStore = create<PiecesState>(set => ({
   pieces: [],
-  pushPiece: (newPiece: {value: string, label: string}) => {
-    set((state) => ({ 
-      pieces: [...state.pieces, newPiece]
+  pushPiece: (newPiece: Piece) => {
+    set(state => ({
+      pieces: [...state.pieces, newPiece],
     }));
   },
 }));
-
-
 
 function App() {
   const theCanvas = useRef(null);
   const viewer: React.RefObject<any> = useRef(null);
 
   // CORRECT: Use selector functions
-  const pieces = useStore((state) => state.pieces);
-  const pushPiece = useStore((state) => state.pushPiece);
+  const pieces = useStore(state => state.pieces);
+  const pushPiece = useStore(state => state.pushPiece);
 
   useEffect(() => {
     viewer.current = new Viewer({
-      canvasElement: theCanvas.current
+      canvasElement: theCanvas.current,
     });
-    
-
 
     viewer.current.scene.clearLights();
-    
+
     new AmbientLight(viewer.current.scene, {
       color: [0.999, 0.999, 0.999],
-      intensity: 0.6
+      intensity: 0.999,
     });
-    
 
-   // viewer.current.scene.setObjectSelected({})
+    // viewer.current.scene.setObjectSelected({})
 
     const xktLoader = new XKTLoaderPlugin(viewer.current);
     const storeyViewsPlugin = new StoreyViewsPlugin(viewer.current);
-    
+
     const model = xktLoader.load({
       id: "maz",
       src: "/models/ar/geometry.xkt",
-      edges: true
+      edges: true,
     });
 
     model.on("loaded", () => {
       console.log("Model loaded!!!");
-      viewer.current.scene.setObjectsSelected(["1qF3ubcHz968P9vHIJ5clk", "1qF3ubcHz968P9vHIJ5clk"])
-        console.log(viewer.current.scene.scene)
-      const x = viewer.current.scene.viewer.metaScene.metaModels["maz"].metaObjects;
-      const names: {value: string, label: string}[] = [];
-      console.log(x)
+      viewer.current.scene.setObjectsSelected([
+        "1qF3ubcHz968P9vHIJ5clk",
+        "1qF3ubcHz968P9vHIJ5clk",
+        "2PReNj8db96h06nTwdVvrP",
+        "2tagUSsGv3jfWthxK3IHRX"
+
+      ]);
+
+      const x =
+        viewer.current.scene.viewer.metaScene.metaModels["maz"].metaObjects;
+      const names: { label: string; value: string }[] = [];
+      console.log(x);
       // Collect all names first
       Object.values(x).forEach(a => {
-       /*  console.log("Found object:", a.name, a.id); */
-        names.push({label: a.name, value: a.id});
+        /*  console.log("Found object:", a.name, a.id); */
+        names.push({ label: a.name, value: a.id });
       });
-      
+
       // Add all names to the store
       names.forEach(name => {
         pushPiece(name);
       });
-      
-      console.log("All pieces should be added now. Check the useEffect above for updates.");
+
+      console.log(
+        "All pieces should be added now. Check the useEffect above for updates."
+      );
     });
 
-   
-    
     model.on("loaded", () => {
       viewer.current.cameraFlight.flyTo(model);
     });
@@ -103,31 +109,33 @@ function App() {
             placeholder="поищите"
             /* options={pieces.map(piece => ({ value: piece.id, label: piece }))} */
             options={pieces}
-            onChange={()=> { if(viewer.current.scene.setObjectsSelected) {
-                viewer.current.scene.setObjectsSelected([])
-            }}}
-            onSelect={()=> { if(viewer.current.scene.setObjectsSelected) {
-                console.log("can we really select the object?")
-            } else {
-                console.log('probably we still can not')
-            }}}
-            style={{ width: '350px'}}
-            fieldNames={label: label, value: value}
+            filterOption={(input, option) => 
+              (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+            }
+            /* onChange={(arg) => {
+              if (viewer.current.scene.setObjectsSelected) {
+                console.log('onChange')
+                console.log(arg);
+                console.log(typeof arg)
+                viewer.current.scene.setObjectsSelected([arg]);
+              }
+            }} */
+            onSelect={(arg) => {
+              if (viewer.current.scene.setObjectsSelected) {
+                console.log("onSelect")
+            console.log(  viewer.current.scene.setObjectsSelected([arg], true))
+                viewer.current.scene.setObjectsSelected([arg], true)
+
+              } else {
+                console.log("probably we still can not");
+              }
+            }}
+            style={{ width: "350px" }}
           />
         </div>
-        
-        {/* Debug display */}
-{/*         <div className="absolute top-10 left-0 z-20 bg-white p-4">
-          <h3>Pieces in store: {pieces.length}</h3>
-          <ul>
-            {pieces.map((piece, index) => (
-              <li key={index}>{piece}</li>
-            ))}
-          </ul>
-        </div> */}
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -70,7 +70,7 @@ console.log(pushPiece)
       //  console.log(viewer.current.scene.viewer.metaScene.metaModels["maz"].metaObjects/* ["0AmTZ$KXr4DB8sGN2V3hMD"].name */)
       console.log("the hook is running!!!")
       let x = viewer.current.scene.viewer.metaScene.metaModels["maz"].metaObjects
-      Object.values(x).forEach(a=> {console.log(a.name), pushPiece(a.name), console.log(pieces)})
+      Object.values(x).forEach((a: any)=> {console.log(a.name), pushPiece(a.name), console.log(pieces)})
       
     })
     new ImagePlane(viewer.current.scene, {
