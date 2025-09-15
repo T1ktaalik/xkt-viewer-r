@@ -4,13 +4,12 @@ import {
   Viewer,
   XKTLoaderPlugin,
 } from "@xeokit/xeokit-sdk";
-
- import * as pako from 'pako'
 import { Select } from "antd"
 import { create } from "zustand"
+import theUri from "./assets/geometry";
 
 
-
+const theVeryUri = `data:model/example;base64,${theUri}`
 interface Piece {
   label: string;
   value: string;
@@ -30,7 +29,7 @@ const useStore = create<PiecesState>(set => ({
 }));
 
 function App() {
-  window.pako = pako
+
   const theCanvas: any = useRef(undefined);
   const viewer: React.RefObject<any> = useRef(null);
 
@@ -46,7 +45,7 @@ function App() {
 
     const model = xktLoader.load({
       id: "maz",
-      src: "geometry.xkt",
+      src: theVeryUri,
       edges: true,
     });
 
